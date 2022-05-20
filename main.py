@@ -8,12 +8,26 @@ janela = pygame.display.set_mode((1920, 1020))
 pygame.display.set_caption('Guitar Hero')
 
 #Cores
-amarelo = (255,255,0)
-vermelho = (255,0,0)
-azul = (0,0,255)
 verde = (0,255,0)
+vermelho = (255,0,0)
+amarelo = (255,255,0)
+azul = (0,0,255)
 laranja = (255,122,0)
 branco = (255,255,255)
+
+#Posições
+botao_verde = (780,900)
+botao_vermelho = (870,900)
+botao_amarelo = (960,900)
+botao_azul = (1050,900)
+botao_laranja = (1140,900)
+
+#Teclas
+tecla_verde = pygame.K_g
+tecla_vermelha = pygame.K_h
+tecla_amarela = pygame.K_j
+tecla_azul = pygame.K_k
+tecla_laranja = pygame.K_l
 
 game = True
 
@@ -24,16 +38,27 @@ while game:
         # Para sair
         if event.type == pygame.QUIT:
             game = False
+        if event.type == pygame.KEYDOWN:
+            if event.key == tecla_verde:
+                verde = (122, 255, 122)
+            if event.key == tecla_vermelha:
+                vermelho == (255,122,122)
+            if event.key == tecla_amarela:
+                amarelo = (255,255,122)
+            if event.key == tecla_azul:
+                azul = (122,122,255)
+            if event.key == tecla_laranja:
+                laranja = (255,255,122)
 
     # Saídas
     janela.fill((0, 0, 0))
 
     # Bolinhas
-    bolinha_amarela = pygame.draw.circle(janela,amarelo,(960,900),35)
-    bolinha_vermelha = pygame.draw.circle(janela,vermelho,(870,900),35)
-    bolinha_verde = pygame.draw.circle(janela,verde,(780,900),35)
-    bolinha_azul = pygame.draw.circle(janela,azul,(1050,900),35)
-    bolinha_laranja = pygame.draw.circle(janela,laranja,(1140,900),35)
+    bolinha_amarela = pygame.draw.circle(janela,amarelo,botao_amarelo,35)
+    bolinha_vermelha = pygame.draw.circle(janela,vermelho,botao_vermelho,35)
+    bolinha_verde = pygame.draw.circle(janela,verde,botao_verde,35)
+    bolinha_azul = pygame.draw.circle(janela,azul,botao_azul,35)
+    bolinha_laranja = pygame.draw.circle(janela,laranja,botao_laranja,35)
 
     #Retas
     reta_direita = pygame.draw.line(janela,branco,(700,1080),(700,0)) 
