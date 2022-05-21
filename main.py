@@ -1,8 +1,10 @@
 # Inicialização
 import pygame
+from pygame import NUMEVENTS, mixer #Utilizado para tocar os sons
 
 #Inicialização
 pygame.init()
+mixer.init() 
 
 janela = pygame.display.set_mode((1920, 1020))
 pygame.display.set_caption('Guitar Hero')
@@ -24,31 +26,39 @@ botao_laranja = (1140,900)
 
 #Teclas
 tecla_verde = pygame.K_g
-tecla_vermelha = pygame.K_h
+tecla_vermelha = pygame.K_h 
 tecla_amarela = pygame.K_j
 tecla_azul = pygame.K_k
 tecla_laranja = pygame.K_l
+ 
+#Estrutura para tocar a música
+pygame.mixer.music.load('song1.mp3') #Carrega a música
+pygame.mixer.music.set_volume(1) #o volume vai de 0 a 1
+pygame.mixer.music.play()
 
 game = True
 
 # Loop
 while game: 
+    
     # Eventos
     for event in pygame.event.get():
         # Para sair
+
         if event.type == pygame.QUIT:
             game = False
+        
         if event.type == pygame.KEYDOWN:
             if event.key == tecla_verde:
                 verde = (122, 255, 122)
             if event.key == tecla_vermelha:
-                vermelho == (255,122,122)
+                vermelho = (255,122,122)
             if event.key == tecla_amarela:
                 amarelo = (255,255,122)
             if event.key == tecla_azul:
                 azul = (122,122,255)
             if event.key == tecla_laranja:
-                laranja = (255,255,122)
+                laranja = (255,0,122)
 
     # Saídas
     janela.fill((0, 0, 0))
