@@ -9,14 +9,6 @@ mixer.init()
 janela = pygame.display.set_mode((1920, 1020))
 pygame.display.set_caption('Guitar Hero')
 
-#Cores
-verde = (0,255,0)
-vermelho = (255,0,0)
-amarelo = (255,255,0)
-azul = (0,0,255)
-laranja = (255,122,0)
-branco = (255,255,255)
-
 #Posições
 botao_verde = (780,900)
 botao_vermelho = (870,900)
@@ -30,17 +22,54 @@ tecla_vermelha = pygame.K_h
 tecla_amarela = pygame.K_j
 tecla_azul = pygame.K_k
 tecla_laranja = pygame.K_l
- 
+
+#Cores
+verde = (0,255,0)
+vermelho = (255,0,0)
+amarelo = (255,255,0)
+azul = (0,0,255)
+laranja = (255,122,0)
+branco = (255,255,255)
+        
+
+#Dicionário para imagens, sons e fontes
+assets = {}
+assets['amarelo'] = pygame.image.load('assets/notes/nota_amarela.png').convert_alpha()
+assets['vermelho'] =pygame.image.load('assets/notes/nota_vermelha.png').convert_alpha()
+assets['verde'] = pygame.image.load('assets/notes/nota_verde.png').convert_alpha()
+assets['azul'] = pygame.image.load('assets/notes/nota_azul.png').convert_alpha()
+assets['laranja'] = pygame.image.load('assets/notes/nota_laranja.png').convert_alpha()
+
+#Classe de bolinhas
+class Notas(pygame.sprite.Sprite):
+    def __init__(self, cor):        
+        pygame.sprite.Sprite.__init__(self)
+        self.image = assets[cor]
+        self.mask = pygame.mask.from_surface(self.image)
+        self.rect = self.image.get_rect()
+        self.rect.x = 935
+        self.rect.y = -12.5
+        self.speedy = 5
+    
+    def update(self):
+        self.rect.y += self.speedy
+    
+clock = pygame.time.Clock()
+todas_as_notas = pygame.sprite.Group()
+FPS = 30
+
 #Estrutura para tocar a música
 pygame.mixer.music.load('song1.mp3') #Carrega a música
 pygame.mixer.music.set_volume(1) #o volume vai de 0 a 1
 pygame.mixer.music.play()
 
 game = True
+move = Notas('amarelo')
 
 # Loop
 while game: 
-    
+    clock.tick(FPS)
+
     # Eventos
     for event in pygame.event.get():
         # Para sair
@@ -58,7 +87,10 @@ while game:
             if event.key == tecla_azul:
                 azul = (122,122,255)
             if event.key == tecla_laranja:
-                laranja = (255,0,122)
+                laranja = (255,0,122)   
+
+        
+    move.update()
 
     # Saídas
     janela.fill((0, 0, 0))
@@ -69,6 +101,17 @@ while game:
     bolinha_verde = pygame.draw.circle(janela,verde,botao_verde,35)
     bolinha_azul = pygame.draw.circle(janela,azul,botao_azul,35)
     bolinha_laranja = pygame.draw.circle(janela,laranja,botao_laranja,35)
+
+    #Cores
+    verde = (0,255,0)
+    vermelho = (255,0,0)
+    amarelo = (255,255,0)        
+    azul = (0,0,255)
+    laranja = (255,122,0)
+    branco = (255,255,255)
+        
+
+    janela.blit(move.image,move.rect)
 
     #Retas
     reta_direita = pygame.draw.line(janela,branco,(700,1080),(700,0)) 
