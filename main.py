@@ -2,17 +2,21 @@
 import pygame
 from pygame import K_ESCAPE, K_SPACE, NUMEVENTS, mixer #Utilizado para tocar os sons
 
+WIDTH = 1920
+HEIGHT = 1020
+INTERVALO = 520
+INTERVALO_INI = (WIDTH-INTERVALO)/2
 
 #Inicialização
 pygame.init()
 mixer.init() 
 
-janela = pygame.display.set_mode((1920, 1020))
+janela = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Guitar Hero')
 
 #Posições
-botao_verde = (780,900)
-botao_vermelho = (870,900)
+botao_verde = (INTERVALO_INI + 35,900)
+botao_vermelho = (INTERVALO_INI + 70 * 1 + 35,900)
 botao_amarelo = (960,900)
 botao_azul = (1050,900)
 botao_laranja = (1140,900)
@@ -76,11 +80,25 @@ az = Notas('azul')
 lr = Notas('laranja')
 
 music_p = False
+tempo = 0
 
+font = pygame.font.SysFont(None, 48)
+
+partitura = {
+    5: 'amarelo',
+    10: 'azul'
+}
 # Loop
+segundo = 0
 while game: 
     clock.tick(FPS)
-    
+    segundo = segundo % FPS
+    if segundo == 0:
+        tempo += 1 
+    segundo += 1
+    if tempo in partitura:
+        variavel = 'para de reclamar do meu codigo porra'
+        
 
     # Eventos
     for event in pygame.event.get():
@@ -135,8 +153,15 @@ while game:
     janela.blit(am.image,am.rect)
 
     #Retas
-    reta_direita = pygame.draw.line(janela,branco,(700,1080),(700,0)) 
-    reta_esquerda = pygame.draw.line(janela,branco,(1220,1080),(1220,0)) 
+    reta_direita = pygame.draw.line(janela,branco,((WIDTH-INTERVALO)/2,1080),(700,0)) 
+    reta_esquerda = pygame.draw.line(janela,branco,((WIDTH+INTERVALO)/2,1080),(1220,0)) 
+
+    # Desenhando o score
+    print(tempo)
+    text_surface = font.render("{}".format(tempo), True, (255, 255, 0))
+    text_rect = text_surface.get_rect()
+    text_rect.midtop = (100,  100)
+    janela.blit(text_surface, text_rect)
 
     # Atualiza estado do jogo
     pygame.display.update()  # Mostra o novo frame para o jogador
