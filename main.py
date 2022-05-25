@@ -1,11 +1,12 @@
 # Inicialização
 import pygame
-from pygame import NUMEVENTS, mixer #Utilizado para tocar os sons
+from pygame import K_ESCAPE, K_SPACE, NUMEVENTS, mixer #Utilizado para tocar os sons
+
 
 #Inicialização
 pygame.init()
 mixer.init() 
-main_menu = True
+
 janela = pygame.display.set_mode((1920, 1020))
 pygame.display.set_caption('Guitar Hero')
 
@@ -39,33 +40,6 @@ assets['vermelho'] =pygame.image.load('assets/notes/nota_vermelha.png').convert_
 assets['verde'] = pygame.image.load('assets/notes/nota_verde.png').convert_alpha()
 assets['azul'] = pygame.image.load('assets/notes/nota_azul.png').convert_alpha()
 assets['laranja'] = pygame.image.load('assets/notes/nota_laranja.png').convert_alpha()
-start_img = pygame.image.load('imagens/tela_inicio/start.png').convert_alpha()
-exit_img = pygame.image.load('imagens/tela_inicio/start.png').convert_alpha()
-
-class botao:
-    def __init__(self, x, y, imagem, escala):
-        largura = imagem.get_width()
-        altura = imagem.get_height()
-        self.imagen = pygame.transform.scale(imagem, (int(largura * escala), int(altura * escala)))
-        self.rect = self.imagen.get_rect()
-        self.rect.topleft = (x, y)
-        self.clicou = False
-    def draw(self):
-        clicou = False
-        posmouse = pygame.mouse.get_pos()
-        if self.rect.collidepoint(posmouse):
-            if pygame.mouse.get_pressed()[0] == 1 and self.clicked == False:
-                self.clicked = True
-                clicou = True
-        if pygame.mouse.get_pressed()[0] == 0:
-            self.clicked = False
-
-        janela.blit(self.image, (self.rect.x, self.rect.y))
-        return clicou
-
-start_botao = botao(100, 200, start_img, 0.8)
-exit_botao = botao(450, 200, exit_img, 0.8)
-
 
 #Classe de bolinhas
 class Notas(pygame.sprite.Sprite):
@@ -76,10 +50,15 @@ class Notas(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = 935
         self.rect.y = -12.5
-        self.speedy = 5
+        self.speedy = 10
     
     def update(self):
         self.rect.y += self.speedy
+    
+    def remove(self):
+        transp = (0,0,0,0)
+        self.image.fill(transp)
+
     
 clock = pygame.time.Clock()
 todas_as_notas = pygame.sprite.Group()
@@ -88,69 +67,79 @@ FPS = 30
 #Estrutura para tocar a música
 pygame.mixer.music.load('song1.mp3') #Carrega a música
 pygame.mixer.music.set_volume(1) #o volume vai de 0 a 1
-pygame.mixer.music.play()
 
 game = True
-move = Notas('amarelo')
+vd = Notas('verde')
+vm = Notas('vermelho')
+am = Notas('amarelo')
+az = Notas('azul')
+lr = Notas('laranja')
+
+music_p = False
 
 # Loop
 while game: 
     clock.tick(FPS)
-    janela.fill((202,228,241))
-    if main_menu == True:
-        if start_botao.draw():
-            main_menu = False
-        if exit_botao.draw():
+    
+
+    # Eventos
+    for event in pygame.event.get():
+        # Para sair
+        if event.type == pygame.KEYUP:
+            if event.key == K_SPACE:
+                pygame.mixer.music.play()
+
+
+            
+        if event.type == pygame.QUIT:
             game = False
-    else:
-# Eventos
-        for event in pygame.event.get():
-            # Para sair
+        
+        if event.type == pygame.KEYDOWN:
+            if event.key == tecla_verde:
+                verde = branco
+            if event.key == tecla_vermelha:
+                vermelho = branco
+            if event.key == tecla_amarela:
+                amarelo = branco
+                if am.rect.y>865 and am.rect.y<935:
+                    am.remove()
 
-            if event.type == pygame.QUIT:
-                game = False
-            
-            if event.type == pygame.KEYDOWN:
-                if event.key == tecla_verde:
-                    verde = (122, 255, 122)
-                if event.key == tecla_vermelha:
-                    vermelho = (255,122,122)
-                if event.key == tecla_amarela:
-                    amarelo = (255,255,122)
-                if event.key == tecla_azul:
-                    azul = (122,122,255)
-                if event.key == tecla_laranja:
-                    laranja = (255,0,122)   
-        pygame.display.update()
-            
-        move.update()
-        # Saídas
-        janela.fill((0, 0, 0))
+            if event.key == tecla_azul:
+                azul = branco
+            if event.key == tecla_laranja:
+                laranja = branco   
 
-        # Bolinhas
-        bolinha_amarela = pygame.draw.circle(janela,amarelo,botao_amarelo,35)
-        bolinha_vermelha = pygame.draw.circle(janela,vermelho,botao_vermelho,35)
-        bolinha_verde = pygame.draw.circle(janela,verde,botao_verde,35)
-        bolinha_azul = pygame.draw.circle(janela,azul,botao_azul,35)
-        bolinha_laranja = pygame.draw.circle(janela,laranja,botao_laranja,35)
+        
+    
+    am.update()
 
-        #Cores
-        verde = (0,255,0)
-        vermelho = (255,0,0)
-        amarelo = (255,255,0)        
-        azul = (0,0,255)
-        laranja = (255,122,0)
-        branco = (255,255,255)
-            
+    # Saídas
+    janela.fill((0, 0, 0))
 
-        janela.blit(move.image,move.rect)
+    # Bolinhas
+    bolinha_amarela = pygame.draw.circle(janela,amarelo,botao_amarelo,35)
+    bolinha_vermelha = pygame.draw.circle(janela,vermelho,botao_vermelho,35)
+    bolinha_verde = pygame.draw.circle(janela,verde,botao_verde,35)
+    bolinha_azul = pygame.draw.circle(janela,azul,botao_azul,35)
+    bolinha_laranja = pygame.draw.circle(janela,laranja,botao_laranja,35)
 
-        #Retas
-        reta_direita = pygame.draw.line(janela,branco,(700,1080),(700,0)) 
-        reta_esquerda = pygame.draw.line(janela,branco,(1220,1080),(1220,0)) 
+    #Cores
+    verde = (0,255,0)
+    vermelho = (255,0,0)
+    amarelo = (255,255,0)        
+    azul = (0,0,255)
+    laranja = (255,122,0)
+    branco = (255,255,255)
+        
 
-        # Atualiza estado do jogo
-        pygame.display.update()  # Mostra o novo frame para o jogador
+    janela.blit(am.image,am.rect)
+
+    #Retas
+    reta_direita = pygame.draw.line(janela,branco,(700,1080),(700,0)) 
+    reta_esquerda = pygame.draw.line(janela,branco,(1220,1080),(1220,0)) 
+
+    # Atualiza estado do jogo
+    pygame.display.update()  # Mostra o novo frame para o jogador
 
 # Finalização
 pygame.quit() 
