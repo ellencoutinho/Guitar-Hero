@@ -1,6 +1,7 @@
 ######### importando bibliotecas #########
 import pygame
-from pygame import K_ESCAPE, mixer
+import random
+from pygame import K_ESCAPE, mixer, K_j
 
 #======= inicialização =======#
 pygame.init()
@@ -27,7 +28,7 @@ linha_d_f = (2*terco, height)
 y_teclas = int(height * 15/17)
 
 clock = pygame.time.Clock()
-fps = 30
+fps = 60
 
 branco = (255,255,255)
 verde = (0,255,0)
@@ -55,7 +56,16 @@ dados_teclas = {
 }
         #=== dicionario para imagens, sons e fontes ===#
 assets = {
-    'amarelo' : pygame.image.load('assets/notes/nota_amarela.png').convert_alpha()
+    'notas' : {
+        'verde' : pygame.image.load('assets/notes/nota_verde.png').convert_alpha(),
+        'vermelho' : pygame.image.load('assets/notes/nota_vermelha.png').convert_alpha(),
+        'amarelo' : pygame.image.load('assets/notes/nota_amarela.png').convert_alpha(),
+        'azul' : pygame.image.load('assets/notes/nota_azul.png').convert_alpha(),
+        'laranja' : pygame.image.load('assets/notes/nota_laranja.png').convert_alpha()
+    },
+    'holds' : {
+        'amarelo' : pygame.image.load('assets/notes/hold_amarelo.png').convert_alpha()
+    }
 }
 
 
@@ -81,7 +91,9 @@ class Teclas:
 class Notes(pygame.sprite.Sprite):
     def __init__(self, cor):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.transform.scale((assets[cor]), (36,36))
+        self.nome = cor
+        self.color = dados_teclas[cor][0]
+        self.image = pygame.transform.scale((assets['notas'][cor]), (36,36))
         self.radius = 18
         self.mask = pygame.mask.from_surface(self.image)
         self.rect = self.image.get_rect()
@@ -91,37 +103,110 @@ class Notes(pygame.sprite.Sprite):
     
     def update(self):
         self.rect.y += self.speed_y
-        print(self.rect.y)
+
     
     def remove(self):
         self.image.fill(transparente)
+
+    #def hold(self, cor, time):
+    #    pygame.sprite.Sprite.__init__(self)
+    #    self.len = time*fps
+     #   self.image = pygame.transform.scale((assets['holds'][cor]), (36,self.len))
+      #  self.mask = pygame.mask.from_surface(self.image)
+       # self.rect = self.image.get_rect()
+        #self.rect.x = dados_teclas[cor][1][0] - self.radius
+        #self.rect.y = -(self.radius)
+        
+
+
+
 
 todas_as_notas = pygame.sprite.Group()
 
 #======= inicializando as sprites =======#
 
-cor = 'amarelo'
-nota = Notes(cor)
+atual = 'amarelo'
+nota = Notes(atual)
+tecla = Teclas(atual)
+tempo = 0
+segundo = 0
+ta = 0
 
 
 
 while game:
     
     clock.tick(fps)
+    segundo = segundo % fps
+    if segundo == 0:
+        tempo += 1 
+    segundo += 1
+    print(tempo)
+    if tempo != ta:
+        ta+=1
+        nota = Notes(random.choice(['verde', 'vermelho','amarelo','azul','laranja']))
 
 
     #===== eventos =====#
     for event in pygame.event.get():
 
         if event.type == pygame.KEYDOWN:
-            if event.key() == pygame.K_j:
-                dados_teclas[cor][0] = branco
+            if event.key == pygame.K_g:
+                dados_teclas['verde'][0] = branco
+                gpress = nota.nome == 'verde'
+                if nota.rect.y+2*nota.radius>tecla.posi[1]-tecla.radius and nota.rect.y<tecla.posi[1]+tecla.radius and gpress:
+                    nota.remove()
+            
+            if event.key == pygame.K_h:
+                dados_teclas['vermelho'][0] = branco
+                hpress = nota.nome == 'vermelho'
+                if nota.rect.y+2*nota.radius>tecla.posi[1]-tecla.radius and nota.rect.y<tecla.posi[1]+tecla.radius and hpress:
+                    nota.remove()
+            
+            if event.key == pygame.K_j:
+                dados_teclas['amarelo'][0] = branco
+                jpress = nota.nome == 'amarelo'
+                if nota.rect.y+2*nota.radius>tecla.posi[1]-tecla.radius and nota.rect.y<tecla.posi[1]+tecla.radius and jpress:
+                    nota.remove()
+
+            if event.key == pygame.K_k:
+                dados_teclas['azul'][0] = branco
+                kpress = nota.nome == 'azul'
+                if nota.rect.y+2*nota.radius>tecla.posi[1]-tecla.radius and nota.rect.y<tecla.posi[1]+tecla.radius and kpress:
+                    nota.remove()
+
+            if event.key == pygame.K_l:
+                dados_teclas['laranja'][0] = branco
+                lpress = nota.nome  == 'laranja'
+                if nota.rect.y+2*nota.radius>tecla.posi[1]-tecla.radius and nota.rect.y<tecla.posi[1]+tecla.radius and lpress:
+                    nota.remove()
+
 
         if event.type == pygame.KEYUP:
-            if event.key() == K_ESCAPE:
+            if event.key == K_ESCAPE:
                 game = False
-            if event.key() == pygame.K_j:
-                dados_teclas[cor][0] = amarelo
+
+
+            if event.key == pygame.K_g:
+                dados_teclas['verde'][0] = verde
+                gpress = False
+
+            if event.key == pygame.K_h:
+                dados_teclas['vermelho'][0] = vermelho
+                hpress = False
+
+            if event.key == pygame.K_j:
+                dados_teclas['amarelo'][0] = amarelo
+                jpress = False
+
+            if event.key == pygame.K_k:
+                dados_teclas['azul'][0] = azul
+                kpress = False
+
+            if event.key == pygame.K_l:
+                dados_teclas['laranja'][0] = laranja
+                lpress = False
+
         if event.type == pygame.QUIT:
             game = False
 
@@ -133,6 +218,7 @@ while game:
     nota.update()
     window.fill((0,0,0))
     window.blit(nota.image, nota.rect)
+    tecla.draw()
     for c in dados_teclas:
         tecla = Teclas(c)
         tecla.draw()
