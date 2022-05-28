@@ -5,12 +5,14 @@ from pygame import K_ESCAPE, mixer, K_j
 
 #======= inicialização =======#
 pygame.init()
+pygame.font.init()
 mixer.init()
 
 
 
 #======= condições =======#
 game = True
+inicio = True
 
 #======= variáveis e dimensões =======#
 width = 800
@@ -70,8 +72,6 @@ assets = {
 
 
 
-
-
 #============= classes =============#
 
 class Teclas:
@@ -99,7 +99,7 @@ class Notes(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = dados_teclas[cor][1][0] - self.radius
         self.rect.y = -(self.radius/2)
-        self.speed_y = 10
+        self.speed_y = 10                                                 #Seria melhor 5, mas a nota não chegaria até o final
     
     def update(self):
         self.rect.y += self.speed_y
@@ -118,11 +118,8 @@ class Notes(pygame.sprite.Sprite):
         #self.rect.y = -(self.radius)
         
 
-
-
-
 todas_as_notas = pygame.sprite.Group()
-
+ 
 #======= inicializando as sprites =======#
 
 atual = 'amarelo'
@@ -132,23 +129,31 @@ tempo = 0
 segundo = 0
 ta = 0
 
+#====== estrutura para tocar música ======#
+pygame.mixer.music.load('song1.mp3')            #Carrega a música
+pygame.mixer.music.set_volume(1)                #o volume vai de 0 a 1
 
+#========== fonte para textos ============#
+font = pygame.font.SysFont(None, 48)
 
 while game:
-    
-    clock.tick(fps)
-    segundo = segundo % fps
-    if segundo == 0:
-        tempo += 1 
-    segundo += 1
-    print(tempo)
-    if tempo != ta:
-        ta+=1
-        nota = Notes(random.choice(['verde', 'vermelho','amarelo','azul','laranja']))
+    if inicio == False: 
+        clock.tick(fps)
+        segundo = segundo % fps
+        if segundo == 0:
+            tempo += 1 
+        segundo += 1
+        print(tempo)
+        if tempo != ta:
+            ta+=1
+           # Notes(random.choice(['verde', 'vermelho','amarelo','azul','laranja']))
+            nota = Notes(random.choice(['verde', 'vermelho','amarelo','azul','laranja'])) #O problema está aqui        
 
+    tecla_start = font.render("Aperte uma tecla para começar", True,  (255,255,255)) 
 
     #===== eventos =====#
     for event in pygame.event.get():
+        
 
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_g:
@@ -183,6 +188,10 @@ while game:
 
 
         if event.type == pygame.KEYUP:
+            if inicio:
+                inicio = False
+                pygame.mixer.music.play()
+
             if event.key == K_ESCAPE:
                 game = False
 
@@ -197,7 +206,7 @@ while game:
 
             if event.key == pygame.K_j:
                 dados_teclas['amarelo'][0] = amarelo
-                jpress = False
+                jpress = False   
 
             if event.key == pygame.K_k:
                 dados_teclas['azul'][0] = azul
@@ -208,16 +217,15 @@ while game:
                 lpress = False
 
         if event.type == pygame.QUIT:
-            game = False
-
-            
-
-        
-        
+            game = False        
     
     nota.update()
     window.fill((0,0,0))
     window.blit(nota.image, nota.rect)
+
+    if inicio:
+        window.blit(tecla_start,(terco-101,height/3))  
+    
     tecla.draw()
     for c in dados_teclas:
         tecla = Teclas(c)
