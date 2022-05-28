@@ -125,6 +125,7 @@ todas_as_notas = pygame.sprite.Group()
 atual = 'amarelo'
 nota = Notes(atual)
 tecla = Teclas(atual)
+acertos = 0
 tempo = 0
 segundo = 0
 ta = 0
@@ -160,30 +161,35 @@ while game:
                 dados_teclas['verde'][0] = branco
                 gpress = nota.nome == 'verde'
                 if nota.rect.y+2*nota.radius>tecla.posi[1]-tecla.radius and nota.rect.y<tecla.posi[1]+tecla.radius and gpress:
+                    acertos+=1
                     nota.remove()
             
             if event.key == pygame.K_h:
                 dados_teclas['vermelho'][0] = branco
                 hpress = nota.nome == 'vermelho'
                 if nota.rect.y+2*nota.radius>tecla.posi[1]-tecla.radius and nota.rect.y<tecla.posi[1]+tecla.radius and hpress:
+                    acertos+=1
                     nota.remove()
             
             if event.key == pygame.K_j:
                 dados_teclas['amarelo'][0] = branco
                 jpress = nota.nome == 'amarelo'
                 if nota.rect.y+2*nota.radius>tecla.posi[1]-tecla.radius and nota.rect.y<tecla.posi[1]+tecla.radius and jpress:
+                    acertos += 1
                     nota.remove()
 
             if event.key == pygame.K_k:
                 dados_teclas['azul'][0] = branco
                 kpress = nota.nome == 'azul'
                 if nota.rect.y+2*nota.radius>tecla.posi[1]-tecla.radius and nota.rect.y<tecla.posi[1]+tecla.radius and kpress:
+                    acertos +=1
                     nota.remove()
 
             if event.key == pygame.K_l:
                 dados_teclas['laranja'][0] = branco
                 lpress = nota.nome  == 'laranja'
                 if nota.rect.y+2*nota.radius>tecla.posi[1]-tecla.radius and nota.rect.y<tecla.posi[1]+tecla.radius and lpress:
+                    acertos+=1
                     nota.remove()
 
 
