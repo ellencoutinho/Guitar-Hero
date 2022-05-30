@@ -1,10 +1,12 @@
 import pygame, sys
+import jogo
+from jogo import width
 
-clock = pygame.time.Clock()
+
 from pygame.locals import *
 pygame.init()
 pygame.display.set_caption('Tela inicial')
-tela = pygame.display.set_mode((1000,700),0,32)
+tela = pygame.display.set_mode((800,600),0,32)
 
 fonte = pygame.font.SysFont(None, 20)
 
@@ -15,18 +17,19 @@ def texto(text, fonte, cor, superficie, x ,y):
     superficie.blit(texto_objeto, texto_rect)
 click = False
 def main_menu():
+    clock = pygame.time.Clock()
     while True:
         tela.fill((0,0,0))
         texto('Guitar Hero', fonte, (255,255,255), tela, 20,20)
         mx, my = pygame.mouse.get_pos()
-        start = pygame.Rect(50,100,200,50)
-        exit = pygame.Rect(50,200,200,50)
+        start = pygame.Rect(width/5,300,width/4,50)
+        exit = pygame.Rect(width/1.5,300,width/4,50)
         if start.collidepoint((mx,my)):
             if click:
                 game()
         if exit.collidepoint((mx,my)):
             if click:
-                pass
+                pygame.quit()
         pygame.draw.rect(tela, (255,0,0), start)
         pygame.draw.rect(tela, (255,0,0), exit)
         click = False
