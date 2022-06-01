@@ -5,6 +5,7 @@ from config import *
 
 from main_menu import main_menu
 from jogo import game
+from selecao_musica import cardapio
 
 
 #======= inicialização =======#
@@ -20,12 +21,13 @@ state = INIT
 while state != QUIT:
     if state == INIT:
         state = main_menu(window)
+    if state == MUSICA:
+        print('aqui')
+        state = cardapio(window)
     if state == GAME:
         state = game(window)
-  #  elif state == GAME:
-   #     state = game_screen(window)
-    else:
-        state = QUIT
+   # else:
+    #    state = QUIT
 
 # ===== Finalização =====
 pygame.quit()  # Função do PyGame que finaliza os recursos utilizados

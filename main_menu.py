@@ -1,5 +1,4 @@
 import pygame, sys
-from os import path
 from config import * 
 
 
@@ -30,7 +29,7 @@ def main_menu(tela):
         exit = pygame.Rect(width/1.5,300,width/4,50)
         if start.collidepoint((mx,my)):
             if click:
-                state = GAME
+                state = MUSICA
 
         if exit.collidepoint((mx,my)):
             if click:
@@ -40,5 +39,5 @@ def main_menu(tela):
         pygame.draw.rect(tela, (255,0,0), exit)
         click = False
         pygame.display.flip()
-     #   return state
+        print(state)
     return state
