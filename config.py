@@ -2,7 +2,8 @@
 INIT = 0
 MUSICA = 1
 GAME = 2
-QUIT = 3
+GAME_DESENHADO = 3
+QUIT = 4
 
 #======= variáveis e dimensões =======#
 width = 800

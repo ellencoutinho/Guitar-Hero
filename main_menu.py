@@ -1,6 +1,7 @@
 import pygame, sys
 from config import * 
 
+pygame.init()
 
 def main_menu(tela):
     click = False
@@ -8,20 +9,19 @@ def main_menu(tela):
     clock = pygame.time.Clock()
     while state == INIT:
         clock.tick(fps)  
+        tela.fill((0,0,0))
 
-        for evento in pygame.event.get():
-            if evento.type == QUIT:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
                 state = QUIT
                 pygame.quit()
                 sys.exit()
-            if evento.type == pygame.KEYDOWN:
+            if event.type == pygame.KEYDOWN:
                 pygame.quit()
                 sys.exit()
-            if evento.type == pygame.MOUSEBUTTONDOWN:
-                if evento.button == 1:
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if event.button == 1:
                     click = True
-
-        tela.fill((0,0,0))
               
         # texto('Guitar Hero', fonte, (255,255,255), tela, 20,20)
         mx, my = pygame.mouse.get_pos()
@@ -39,5 +39,7 @@ def main_menu(tela):
         pygame.draw.rect(tela, (255,0,0), exit)
         click = False
         pygame.display.flip()
-        print(state)
+        pygame.display.update()
+
     return state
+

@@ -5,6 +5,7 @@ from config import *
 
 from main_menu import main_menu
 from jogo import game
+from jogo_gru import partitura
 from selecao_musica import cardapio
 
 
@@ -22,10 +23,11 @@ while state != QUIT:
     if state == INIT:
         state = main_menu(window)
     if state == MUSICA:
-        print('aqui')
         state = cardapio(window)
     if state == GAME:
         state = game(window)
+    if state == GAME_DESENHADO:
+        state = partitura(window)
    # else:
     #    state = QUIT
 
