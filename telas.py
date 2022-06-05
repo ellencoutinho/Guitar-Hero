@@ -24,9 +24,9 @@ while state != QUIT:
         state = main_menu(window)
     if state == MUSICA:
         state = cardapio(window)
-    if state == GAME:
+    if state[0] == 2:
         state = game(window)
-    if state == GAME_DESENHADO:
+    if state[0] == 3:
         state = partitura(window)
    # else:
     #    state = QUIT

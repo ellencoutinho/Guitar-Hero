@@ -2,11 +2,12 @@
 import pygame
 import random
 from sprites import *
-from config import *
-
-        
+from config import *  
+from selecao_musica import cardapio
 
 def game(window):
+    lista = cardapio(window)
+    print(lista)
 
 
     #======= condições =======#
@@ -60,8 +61,7 @@ def game(window):
     ta = 0
 
     #====== estrutura para tocar música ======#
-    musica_escolhida = 'assets/musicas/a-drowning_how-to-destroy-angels.mp3'
-    pygame.mixer.music.load(musica_escolhida)            #Carrega a música
+    pygame.mixer.music.load(lista[1])            #Carrega a música
     pygame.mixer.music.set_volume(1)                     #o volume vai de 0 a 1
 
     #========== fonte para textos ============#
