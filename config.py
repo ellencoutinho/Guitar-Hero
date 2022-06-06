@@ -30,3 +30,6 @@ linha_d_f = (2*terco, height)
 
 y_teclas = int(height * 15/17)
 
+#========== Dicionário com o tempo de parada para as musicas ==========#
+
+
