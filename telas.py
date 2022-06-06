@@ -5,7 +5,7 @@ from config import *
 
 from main_menu import main_menu
 from jogo import game
-from jogo_gru import partitura
+
 from selecao_musica import cardapio
 
 
@@ -26,11 +26,9 @@ while state != QUIT:
         state = cardapio(window)
     if state[0] == 2:
         state = game(window)
-    if state[0] == 3:
-        state = partitura(window)
+
    # else:
     #    state = QUIT
 
 # ===== Finalização =====
 pygame.quit()  # Função do PyGame que finaliza os recursos utilizados
-
