@@ -68,7 +68,7 @@ def game(window):
     #========== fonte para textos ============#
     font = pygame.font.SysFont(None, 48)
     state = GAME
-    while game:
+    while state == GAME:
         if inicio == False: 
             clock.tick(fps)
             segundo = segundo % fps
@@ -85,7 +85,9 @@ def game(window):
 
         #===== eventos =====#
         for event in pygame.event.get():
-            
+            if tempo >= dicio[lista[1]]:
+                state = GANHOU
+
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_g:
