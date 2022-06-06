@@ -5,7 +5,6 @@ from config import *
 
 from main_menu import main_menu
 from jogo import game
-from jogo_gru import partitura
 from selecao_musica import cardapio
 
 

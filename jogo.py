@@ -14,7 +14,14 @@ def game(window):
     game = True
     inicio = True
 
-
+    #======= vairaveis =======#
+    player_data = {
+        'combo' : 0,
+        'acertos' : 0,
+        'erros' : 0, 
+        'notas' : 0
+    }
+    combo = 0
     clock = pygame.time.Clock()
 
 
@@ -52,7 +59,7 @@ def game(window):
     
     #======= inicializando as sprites =======#
 
-    atual = 'amarelo'
+    atual = 'verde'
     nota = Notes(atual, assets, dados_teclas)
     tecla = Teclas(atual, window, dados_teclas)
     acertos = 0
@@ -76,10 +83,12 @@ def game(window):
                 tempo += 1 
             segundo += 1
             print(tempo)
-            if tempo != ta:
+            if tempo != ta/2:
                 ta+=1
             # Notes(random.choice(['verde', 'vermelho','amarelo','azul','laranja']))
-                nota = Notes(random.choice(['verde', 'vermelho','amarelo','azul','laranja']),assets, dados_teclas)    
+                nota = Notes(random.choice(['verde', 'vermelho','amarelo','azul','laranja']),assets, dados_teclas)
+                todas_as_notas.add(nota)
+                player_data['notas'] +=1    
 
         tecla_start = font.render("Aperte uma tecla para começar", True,  (255,255,255)) 
 
@@ -92,36 +101,57 @@ def game(window):
                     dados_teclas['verde'][0] = branco
                     gpress = nota.nome == 'verde'
                     if nota.rect.y+2*nota.radius>tecla.posi[1]-tecla.radius and nota.rect.y<tecla.posi[1]+tecla.radius and gpress:
-                        acertos+=1
+                        player_data['acertos']+=1
                         nota.remove()
+                    else:
+                        player_data['erros'] +=1
                 
                 if event.key == pygame.K_h:
                     dados_teclas['vermelho'][0] = branco
                     hpress = nota.nome == 'vermelho'
                     if nota.rect.y+2*nota.radius>tecla.posi[1]-tecla.radius and nota.rect.y<tecla.posi[1]+tecla.radius and hpress:
-                        acertos+=1
+                        player_data['acertos']+=1
                         nota.remove()
+                    else:
+                        erros +=1
+                        if combo>player_data['combo']:
+                            player_data['combo'] = combo
                 
                 if event.key == pygame.K_j:
                     dados_teclas['amarelo'][0] = branco
                     jpress = nota.nome == 'amarelo'
                     if nota.rect.y+2*nota.radius>tecla.posi[1]-tecla.radius and nota.rect.y<tecla.posi[1]+tecla.radius and jpress:
-                        acertos += 1
+                        player_data['acertos'] += 1
                         nota.remove()
+                    else:
+                        player_data['erros'] +=1
+                        if combo>player_data['combo']:
+                            player_data['combo'] = combo
 
                 if event.key == pygame.K_k:
                     dados_teclas['azul'][0] = branco
                     kpress = nota.nome == 'azul'
                     if nota.rect.y+2*nota.radius>tecla.posi[1]-tecla.radius and nota.rect.y<tecla.posi[1]+tecla.radius and kpress:
-                        acertos +=1
+                        player_data['acertos'] +=1
                         nota.remove()
+                        player_data['combo']+=1
+                    else:
+                        player_data['erros'] +=1
+                        if combo>player_data['combo']:
+                            player_data['combo'] = combo
 
                 if event.key == pygame.K_l:
                     dados_teclas['laranja'][0] = branco
                     lpress = nota.nome  == 'laranja'
                     if nota.rect.y+2*nota.radius>tecla.posi[1]-tecla.radius and nota.rect.y<tecla.posi[1]+tecla.radius and lpress:
-                        acertos+=1
+                        player_data['acertos']+=1
                         nota.remove()
+                        player_data['combo']+=1
+                    else:
+                        player_data['erros'] +=1
+                        if combo>player_data['combo']:
+                            player_data['combo'] = combo
+                
 
 
             if event.type == pygame.KEYUP:
@@ -158,10 +188,10 @@ def game(window):
                 game = False
                 state = QUIT        
         
-        nota.update()
+
         window.fill((0,0,0))
         window.blit(nota.image, nota.rect)
-
+        todas_as_notas.update()
         if inicio:
             window.blit(tecla_start,(terco-101,height/3))  
         

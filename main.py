@@ -47,14 +47,14 @@ assets['laranja'] = pygame.image.load('assets/notes/nota_laranja.png').convert_a
 
 #Classe de bolinhas
 class Notas(pygame.sprite.Sprite):
-    def __init__(self, cor):        
+    def __init__(self, cor):  
         pygame.sprite.Sprite.__init__(self)
         self.image = assets[cor]
         self.mask = pygame.mask.from_surface(self.image)
         self.rect = self.image.get_rect()
         self.rect.x = 935
         self.rect.y = -12.5
-        self.speedy = 10
+        self.speedy = 20
     
     def update(self):
         self.rect.y += self.speedy
@@ -84,10 +84,6 @@ tempo = 0
 
 font = pygame.font.SysFont(None, 48)
 
-partitura = {
-    5: 'amarelo',
-    10: 'azul'
-}
 # Loop
 segundo = 0
 while game: 
@@ -96,8 +92,6 @@ while game:
     if segundo == 0:
         tempo += 1 
     segundo += 1
-    if tempo in partitura:
-        variavel = 'para de reclamar do meu codigo porra'
         
 
     # Eventos
