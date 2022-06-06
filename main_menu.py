@@ -3,6 +3,8 @@ from config import *
 
 pygame.init()
 
+bg = pygame.image.load('imagens/tela_inicial.jpg')
+
 def main_menu(tela):
     click = False
     state = INIT
@@ -22,11 +24,14 @@ def main_menu(tela):
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1:
                     click = True
+        tela.blit(bg, (0,0))
               
-        # texto('Guitar Hero', fonte, (255,255,255), tela, 20,20)
+
+
+              
         mx, my = pygame.mouse.get_pos()
-        start = pygame.Rect(width/5,300,width/4,50)
-        exit = pygame.Rect(width/1.5,300,width/4,50)
+        start = pygame.Rect(width/2.1,380,width/8,100)
+        exit = pygame.Rect(width/1.35,380,width/8,100)
         if start.collidepoint((mx,my)):
             if click:
                 state = MUSICA
@@ -35,8 +40,7 @@ def main_menu(tela):
             if click:
                 pygame.quit()
 
-        pygame.draw.rect(tela, (255,0,0), start)
-        pygame.draw.rect(tela, (255,0,0), exit)
+
         click = False
         pygame.display.flip()
         pygame.display.update()

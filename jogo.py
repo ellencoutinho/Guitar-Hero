@@ -59,6 +59,7 @@ def game(window):
     tempo = 0
     segundo = 0
     ta = 0
+    pygame.mixer.init()
 
     #====== estrutura para tocar música ======#
     pygame.mixer.music.load(lista[1])            #Carrega a música
