@@ -95,8 +95,7 @@ def game(window):
         #===== eventos =====#
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                game = False
-                state = QUIT  
+                exit()
                 
             if tempo >= dicio[lista[1]]:
                 state = GANHOU
@@ -167,7 +166,7 @@ def game(window):
                     pygame.mixer.music.play()
 
                 if event.key == pygame.K_ESCAPE:
-                    game = False
+                    exit()
 
 
                 if event.key == pygame.K_g:
