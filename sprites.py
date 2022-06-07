@@ -32,7 +32,7 @@ class Notes(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = dados_teclas[cor][1][0] - self.radius
         self.rect.y = -(self.radius/2)
-        self.speed_y = 10                                   #Seria melhor 5, mas a nota não chegaria até o final
+        self.speed_y = 10                     
     
     def update(self):
         self.rect.y += self.speed_y
@@ -40,12 +40,3 @@ class Notes(pygame.sprite.Sprite):
     
     def remove(self):
         self.image.fill(transparente)
-
-    #def hold(self, cor, time):
-    #    pygame.sprite.Sprite.__init__(self)
-    #    self.len = time*fps
-     #   self.image = pygame.transform.scale((assets['holds'][cor]), (36,self.len))
-      #  self.mask = pygame.mask.from_surface(self.image)
-       # self.rect = self.image.get_rect()
-        #self.rect.x = dados_teclas[cor][1][0] - self.radius
-        #self.rect.y = -(self.radius)

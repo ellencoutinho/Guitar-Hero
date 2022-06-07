@@ -76,6 +76,8 @@ def game(window):
     font = pygame.font.SysFont(None, 48)
     state = GAME
     while state == GAME:
+        cenario = pygame.image.load('imagens/background.jpg')
+
         if inicio == False: 
             clock.tick(fps)
             segundo = segundo % fps
@@ -83,14 +85,15 @@ def game(window):
                 tempo += 1 
             segundo += 1
             print(tempo)
-            if tempo != ta/2:
+            if tempo != ta:
                 ta+=1
             # Notes(random.choice(['verde', 'vermelho','amarelo','azul','laranja']))
                 nota = Notes(random.choice(['verde', 'vermelho','amarelo','azul','laranja']),assets, dados_teclas)
                 todas_as_notas.add(nota)
                 player_data['notas'] +=1    
 
-        tecla_start = font.render("Aperte uma tecla para começar", True,  (255,255,255)) 
+        else:
+            tecla_start = font.render("Aperte uma tecla para começar", True,  (255,255,255)) 
 
         #===== eventos =====#
         for event in pygame.event.get():
@@ -193,7 +196,7 @@ def game(window):
       
         
 
-        window.fill((0,0,0))
+        window.blit(cenario,(0,0))
         window.blit(nota.image, nota.rect)
         todas_as_notas.update()
         if inicio:
