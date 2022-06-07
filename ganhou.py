@@ -30,8 +30,8 @@ def ganhou(tela1):
 
               
         mx, my = pygame.mouse.get_pos()
-        novamente = pygame.Rect(width/2.1,380,width/8,100)
-        exit = pygame.Rect(width/1.35,380,width/8,100)
+        novamente = pygame.Rect(width/1.11,460,width/14,55)
+        exit = pygame.Rect(width/1.11,530,width/14,55)
         if novamente.collidepoint((mx,my)):
             if click:
                 state = MUSICA
@@ -39,7 +39,6 @@ def ganhou(tela1):
         if exit.collidepoint((mx,my)):
             if click:
                 pygame.quit()
-
 
         click = False
         pygame.display.flip()
