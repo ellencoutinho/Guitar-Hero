@@ -63,12 +63,9 @@ def cardapio(janela):
                 musica_escolhida = 'assets/musicas/eyen_plaid.mp3'
                 state = GAME
 
-
-
         pygame.display.flip()
         pygame.display.update()
         click = False
         lista_return = [state,musica_escolhida]
-        print(lista_return)
 
     return lista_return

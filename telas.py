@@ -2,7 +2,7 @@
 # ----- Importa e inicia pacotes
 import pygame
 from config import *
-from ganhou import ganhou
+from ganhou import ganhou_function
 
 from main_menu import main_menu
 from jogo import game
@@ -26,8 +26,9 @@ while state != QUIT:
         state = cardapio(window)
     if state[0] == 2:
         state = game(window)
-    if state == GANHOU:
-        state = ganhou(window)
+        dados = state
+    if dados[0] == 3:
+        state = ganhou_function(window,dados)
 
    # else:
     #    state = QUIT

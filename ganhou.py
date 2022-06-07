@@ -5,7 +5,17 @@ pygame.init()
 
 bg = pygame.image.load('imagens/tela_acerto.jpg')
 
-def ganhou(tela1):
+def ganhou_function(tela1, resultado):
+    fonte = pygame.font.SysFont(None, 60)
+    porcentagem_acertos = (resultado[1]['acertos']/resultado[1]['notas'])*100
+    valor = '{0:.2f}'.format(porcentagem_acertos)
+    valor = str(valor)
+    texto_acertos = fonte.render(valor + '%',True,verde)
+    texto_erros = fonte.render(str(resultado[1]['erros']), True, verde)
+    texto_combo_maximo = fonte.render(str(resultado[1]['combo']), True, verde)
+
+
+
     click = False
     state = GANHOU
     clock = pygame.time.Clock()
@@ -25,8 +35,11 @@ def ganhou(tela1):
                 if event.button == 1:
                     click = True
         tela1.blit(bg, (0,0))
-              
 
+        #=== Blits dos textos ===#
+        tela1.blit(texto_acertos,(623,219))
+        tela1.blit(texto_erros,(506,314)) 
+        tela1.blit(texto_combo_maximo, (669,394))             
 
               
         mx, my = pygame.mouse.get_pos()

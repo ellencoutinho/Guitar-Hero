@@ -26,9 +26,6 @@ def main_menu(tela):
                     click = True
         tela.blit(bg, (0,0))
               
-
-
-              
         mx, my = pygame.mouse.get_pos()
         start = pygame.Rect(width/2.1,380,width/8,100)
         exit = pygame.Rect(width/1.35,380,width/8,100)

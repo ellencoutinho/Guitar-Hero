@@ -14,7 +14,7 @@ def game(window):
     game = True
     inicio = True
 
-    #======= vairaveis =======#
+    #======= variaveis =======#
     player_data = {
         'combo' : 0,
         'acertos' : 0,
@@ -69,7 +69,7 @@ def game(window):
     pygame.mixer.init()
 
     #====== estrutura para tocar música ======#
-    pygame.mixer.music.load(lista[1])            #Carrega a música
+    pygame.mixer.music.load(lista[1])                    #Carrega a música
     pygame.mixer.music.set_volume(1)                     #o volume vai de 0 a 1
 
     #========== fonte para textos ============#
@@ -94,6 +94,10 @@ def game(window):
 
         #===== eventos =====#
         for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                game = False
+                state = QUIT  
+                
             if tempo >= dicio[lista[1]]:
                 state = GANHOU
 
@@ -187,9 +191,7 @@ def game(window):
                     dados_teclas['laranja'][0] = laranja
                     lpress = False
 
-            if event.type == pygame.QUIT:
-                game = False
-                state = QUIT        
+      
         
 
         window.fill((0,0,0))
@@ -204,6 +206,7 @@ def game(window):
             tecla.draw()
             tecla.lines()
         
+        lista_para_return = [state, player_data]
         pygame.display.update()
         
-    return state
+    return lista_para_return
