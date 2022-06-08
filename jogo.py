@@ -110,6 +110,9 @@ def game(window):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 exit()
+            
+            #if tempo >= 2:
+                state = PERDEU
                 
             if tempo >= dicio[lista[1]]:
                 state = GANHOU

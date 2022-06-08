@@ -3,7 +3,7 @@
 import pygame
 from config import *
 from ganhou import ganhou_function
-
+from perdeu import perdeu
 from main_menu import main_menu
 from jogo import game
 from selecao_musica import cardapio
@@ -29,6 +29,8 @@ while state != QUIT:
         dados = state
     if dados[0] == 3:
         state = ganhou_function(window,dados)
+    if dados[0] == 5:
+        state = perdeu(window)
 
    # else:
     #    state = QUIT

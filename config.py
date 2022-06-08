@@ -4,6 +4,7 @@ MUSICA = 1
 GAME = 2
 GANHOU = 3
 QUIT = 4
+PERDEU = 5
 
 #======= variáveis e dimensões =======#
 width = 800
