@@ -94,7 +94,8 @@ def game(window):
             if segundo == 0:
                 tempo += 1 
             segundo += 1
-#print(tempo)
+            
+            print(tempo)
             if tempo != ta:
                 ta+=1
             # Notes(random.choice(['verde', 'vermelho','amarelo','azul','laranja']))
@@ -110,8 +111,6 @@ def game(window):
             if event.type == pygame.QUIT:
                 exit()
             
-            #if tempo >= 2:
-                state = PERDEU
                 
             if tempo >= dicio[lista[1]]:
                 state = GANHOU
@@ -241,8 +240,14 @@ def game(window):
             tecla.draw()
             tecla.lines()
         
+    
+
+        if vida == 0:
+            state = PERDEU
+            pygame.mixer.music.stop()
+        
         lista_para_return = [state, player_data]
-        print('erro', player_data['erros'], 'vida', vida, '\n', 'y', nota.rect.y, 'limite', y_teclas-2*tecla.radius+2)
+
         pygame.display.update()
         
     return lista_para_return

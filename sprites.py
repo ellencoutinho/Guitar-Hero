@@ -39,4 +39,5 @@ class Notes(pygame.sprite.Sprite):
 
     
     def remove(self):
+        self.image.fill(transparente)
         self.kill()
