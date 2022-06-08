@@ -1,4 +1,5 @@
 ######### importando bibliotecas #########
+
 import pygame
 import random
 from sprites import *
@@ -72,6 +73,7 @@ def game(window):
     tempo = 0
     segundo = 0
     ta = 0
+
     pygame.mixer.init()
 
     #====== estrutura para tocar música ======#
@@ -82,9 +84,6 @@ def game(window):
     font = pygame.font.SysFont(None, 48)
     state = GAME
     while state == GAME:
-
-        if vida>=5:
-            vida = 5
         
         cenario = pygame.image.load('imagens/background.jpg')
         lifebar = assets['lifebar'][str(vida)]
@@ -95,7 +94,7 @@ def game(window):
             if segundo == 0:
                 tempo += 1 
             segundo += 1
-            print(tempo)
+#print(tempo)
             if tempo != ta:
                 ta+=1
             # Notes(random.choice(['verde', 'vermelho','amarelo','azul','laranja']))
@@ -125,6 +124,7 @@ def game(window):
                     if nota.rect.y+2*nota.radius>tecla.posi[1]-tecla.radius and nota.rect.y<tecla.posi[1]+tecla.radius and gpress:
                         player_data['acertos']+=1
                         nota.remove()
+                        vida+=1
                     else:
                         player_data['erros'] +=1
                         if combo>player_data['combo']:
@@ -137,6 +137,7 @@ def game(window):
                     if nota.rect.y+2*nota.radius>tecla.posi[1]-tecla.radius and nota.rect.y<tecla.posi[1]+tecla.radius and hpress:
                         player_data['acertos']+=1
                         nota.remove()
+                        vida+=1
                     else:
                         player_data['erros'] +=1
                         vida-=1
@@ -148,7 +149,8 @@ def game(window):
                     jpress = nota.nome == 'amarelo'
                     if nota.rect.y+2*nota.radius>tecla.posi[1]-tecla.radius and nota.rect.y<tecla.posi[1]+tecla.radius and jpress:
                         player_data['acertos'] += 1
-                        nota.remove()      
+                        nota.remove()
+                        vida+=1      
                     else:
                         player_data['erros'] +=1
                         vida-=1
@@ -162,6 +164,7 @@ def game(window):
                         player_data['acertos'] +=1
                         nota.remove()
                         player_data['combo']+=1
+                        vida+=1                    
                     else:
                         player_data['erros'] +=1
                         vida-=1
@@ -175,6 +178,7 @@ def game(window):
                         player_data['acertos']+=1
                         nota.remove()
                         player_data['combo']+=1
+                        vida+=1
                     else:
                         player_data['erros'] +=1
                         vida-=1
@@ -212,8 +216,16 @@ def game(window):
 
                     dados_teclas['laranja'][0] = laranja
                     lpress = False
+        if nota.rect.y - 60 == y_teclas-2*tecla.radius+2:
+            print('entrei')
+            player_data['erros']+=1
+            vida-=1
 
-      
+        if vida > 5:
+            vida = 5
+        if vida < 0:
+            vida = 0
+        
         
 
         window.blit(cenario,(0,0))
@@ -230,6 +242,7 @@ def game(window):
             tecla.lines()
         
         lista_para_return = [state, player_data]
+        print('erro', player_data['erros'], 'vida', vida, '\n', 'y', nota.rect.y, 'limite', y_teclas-2*tecla.radius+2)
         pygame.display.update()
         
     return lista_para_return
