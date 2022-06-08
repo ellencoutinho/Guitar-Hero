@@ -8,7 +8,6 @@ from selecao_musica import cardapio
 
 def game(window):
     lista = cardapio(window)
-    print(lista)
 
 
     #======= condições =======#
@@ -95,10 +94,8 @@ def game(window):
                 tempo += 1 
             segundo += 1
             
-            print(tempo)
             if tempo != ta:
                 ta+=1
-            # Notes(random.choice(['verde', 'vermelho','amarelo','azul','laranja']))
                 nota = Notes(random.choice(['verde', 'vermelho','amarelo','azul','laranja']),assets, dados_teclas)
                 todas_as_notas.add(nota)
                 player_data['notas'] +=1    
@@ -216,7 +213,6 @@ def game(window):
                     dados_teclas['laranja'][0] = laranja
                     lpress = False
         if nota.rect.y - 60 == y_teclas-2*tecla.radius+2:
-            print('entrei')
             player_data['erros']+=1
             vida-=1
 
@@ -225,8 +221,6 @@ def game(window):
         if vida < 0:
             vida = 0
         
-        
-
         window.blit(cenario,(0,0))
         window.blit(nota.image, nota.rect)
         window.blit(lifebar, (terco-2*sexto, y_teclas))
@@ -240,8 +234,6 @@ def game(window):
             tecla.draw()
             tecla.lines()
         
-    
-
         if vida == 0:
             state = PERDEU
             pygame.mixer.music.stop()

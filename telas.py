@@ -32,8 +32,5 @@ while state != QUIT:
     if dados[0] == 5:
         state = perdeu(window)
 
-   # else:
-    #    state = QUIT
-
 # ===== Finalização =====
 pygame.quit()  # Função do PyGame que finaliza os recursos utilizados
