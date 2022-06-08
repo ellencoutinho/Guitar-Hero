@@ -40,8 +40,8 @@ def game(window):
     }
 
     #======= dicionarios =======#
-
             #== dados das teclas ==#
+
     assets = {
         'notas' : {
             'verde' : pygame.image.load('assets/notes/nota_verde.png').convert_alpha(),
@@ -50,8 +50,13 @@ def game(window):
             'azul' : pygame.image.load('assets/notes/nota_azul.png').convert_alpha(),
             'laranja' : pygame.image.load('assets/notes/nota_laranja.png').convert_alpha()
         },
-        'holds' : {
-            'amarelo' : pygame.image.load('assets/notes/hold_amarelo.png').convert_alpha()
+        'lifebar' : {
+            '5' : pygame.image.load('assets/barra/barra de vida.png').convert_alpha(),
+            '4' : pygame.image.load('assets/barra/barra de vida-1.png').convert_alpha(),
+            '3' : pygame.image.load('assets/barra/barra de vida-2.png').convert_alpha(),
+            '2' : pygame.image.load('assets/barra/barra de vida-3.png').convert_alpha(),
+            '1' : pygame.image.load('assets/barra/barra de vida-4.png').convert_alpha(),
+            '0' : pygame.image.load('assets/barra/barra de vida-5.png').convert_alpha()
         }
     }
 
@@ -63,6 +68,7 @@ def game(window):
     nota = Notes(atual, assets, dados_teclas)
     tecla = Teclas(atual, window, dados_teclas)
     acertos = 0
+    vida=5
     tempo = 0
     segundo = 0
     ta = 0
@@ -76,7 +82,12 @@ def game(window):
     font = pygame.font.SysFont(None, 48)
     state = GAME
     while state == GAME:
+
+        if vida>=5:
+            vida = 5
+        
         cenario = pygame.image.load('imagens/background.jpg')
+        lifebar = assets['lifebar'][str(vida)]
 
         if inicio == False: 
             clock.tick(fps)
@@ -113,6 +124,9 @@ def game(window):
                         nota.remove()
                     else:
                         player_data['erros'] +=1
+                        if combo>player_data['combo']:
+                            player_data['combo'] = combo
+                        vida-=1
                 
                 if event.key == pygame.K_h:
                     dados_teclas['vermelho'][0] = branco
@@ -122,6 +136,7 @@ def game(window):
                         nota.remove()
                     else:
                         player_data['erros'] +=1
+                        vida-=1
                         if combo>player_data['combo']:
                             player_data['combo'] = combo
                 
@@ -130,10 +145,10 @@ def game(window):
                     jpress = nota.nome == 'amarelo'
                     if nota.rect.y+2*nota.radius>tecla.posi[1]-tecla.radius and nota.rect.y<tecla.posi[1]+tecla.radius and jpress:
                         player_data['acertos'] += 1
-                        nota.remove()
-                        
+                        nota.remove()      
                     else:
                         player_data['erros'] +=1
+                        vida-=1
                         if combo>player_data['combo']:
                             player_data['combo'] = combo
 
@@ -146,6 +161,7 @@ def game(window):
                         player_data['combo']+=1
                     else:
                         player_data['erros'] +=1
+                        vida-=1
                         if combo>player_data['combo']:
                             player_data['combo'] = combo
 
@@ -158,6 +174,7 @@ def game(window):
                         player_data['combo']+=1
                     else:
                         player_data['erros'] +=1
+                        vida-=1
                         if combo>player_data['combo']:
                             player_data['combo'] = combo
                 
@@ -198,6 +215,7 @@ def game(window):
 
         window.blit(cenario,(0,0))
         window.blit(nota.image, nota.rect)
+        window.blit(lifebar, (terco-2*sexto, y_teclas))
         todas_as_notas.update()
         if inicio:
             window.blit(tecla_start,(terco-101,height/3))  
