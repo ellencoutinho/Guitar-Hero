@@ -21,7 +21,7 @@ pygame.display.set_caption('Guitar Hero')
 state = INIT
 while state != QUIT:
     if state == INIT:
-        state = main_menu(window)
+        state = main_menu(window) 
     if state == MUSICA:
         state = cardapio(window)
     if state[0] == 2:
