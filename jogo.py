@@ -4,14 +4,13 @@ import pygame
 import random
 from sprites import *
 from config import *  
-from selecao_musica import cardapio
+from selecao_musica import playlist
 
 def game(window):
-    lista = cardapio(window)
+    lista = playlist(window)
 
 
     #======= condições =======#
-    game = True
     inicio = True
 
     #======= variaveis =======#

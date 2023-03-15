@@ -6,7 +6,7 @@ from ganhou import ganhou_function
 from perdeu import perdeu
 from main_menu import main_menu
 from jogo import game
-from selecao_musica import cardapio
+from selecao_musica import playlist
 
 
 #======= inicialização =======#
@@ -23,7 +23,7 @@ while state != QUIT:
     if state == INIT:
         state = main_menu(window) 
     if state == MUSICA:
-        state = cardapio(window)
+        state = playlist(window)
     if state[0] == 2:
         state = game(window)
         dados = state

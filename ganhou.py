@@ -23,17 +23,7 @@ def ganhou_function(tela1, resultado):
         clock.tick(fps)  
         tela1.fill((0,0,0))
 
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                state = QUIT
-                pygame.quit()
-                sys.exit()
-            if event.type == pygame.KEYDOWN:
-                pygame.quit()
-                sys.exit()
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if event.button == 1:
-                    click = True
+        click = closeGame()
         tela1.blit(bg, (0,0))
 
         #=== Blits dos textos ===#
@@ -58,4 +48,19 @@ def ganhou_function(tela1, resultado):
         pygame.display.update()
 
     return state
+
+def closeGame():
+    
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            state = QUIT
+            pygame.quit()
+            sys.exit()
+        if event.type == pygame.KEYDOWN:
+            pygame.quit()
+            sys.exit()
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if event.button == 1:
+                click = True
+    return click
 

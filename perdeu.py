@@ -13,17 +13,7 @@ def perdeu(tela2):
         clock.tick(fps)  
         tela2.fill((0,0,0))
 
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                state = QUIT
-                pygame.quit()
-                sys.exit()
-            if event.type == pygame.KEYDOWN:
-                pygame.quit()
-                sys.exit()
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if event.button == 1:
-                    click = True
+        click = closeGame()
         tela2.blit(bg, (0,0))           
               
         mx, my = pygame.mouse.get_pos()
@@ -42,4 +32,19 @@ def perdeu(tela2):
         pygame.display.update()
 
     return state
+
+def closeGame():
+    for event in pygame.event.get():
+        click = False
+        if event.type == pygame.QUIT:
+            state = QUIT
+            pygame.quit()
+            sys.exit()
+        if event.type == pygame.KEYDOWN:
+            pygame.quit()
+            sys.exit()
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if event.button == 1:
+                click = True
+    return click
 

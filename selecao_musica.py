@@ -5,7 +5,7 @@ from config import *
 bgmusica = pygame.image.load('imagens/sem_goat.jpg')
 
 
-def cardapio(janela):
+def playlist(janela):
     click = False
     clock = pygame.time.Clock()
     state = MUSICA
