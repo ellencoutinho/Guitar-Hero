@@ -2,7 +2,7 @@
 # ----- Importa e inicia pacotes
 import pygame
 from config import *
-from ganhou import ganhou_function
+from ganhou import checa_se_ganhou
 from perdeu import perdeu
 from main_menu import main_menu
 from jogo import game
@@ -28,7 +28,7 @@ while state != QUIT:
         state = game(window)
         dados = state
     if dados[0] == 3:
-        state = ganhou_function(window,dados)
+        state = checa_se_ganhou(window,dados)
     if dados[0] == 5:
         state = perdeu(window)
 
